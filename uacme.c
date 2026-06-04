@@ -2003,10 +2003,12 @@ int main(int argc, char **argv)
             goto out;
         }
 
-        if (!acme_bootstrap(&a))
-            goto out;
-        const char *ari_url = ari_check ?
-            json_find_string(a.dir, "renewalInfo") : NULL;
+        const char *ari_url = NULL;
+        if (ari_check) {
+            if (!acme_bootstrap(&a))
+                goto out;
+            ari_url = json_find_string(a.dir, "renewalInfo");
+        }
 
         msg(1, "checking existence and expiration of %s", filename);
         if (cert_valid(filename, names, ari_url, days, status_check)) {
@@ -2034,6 +2036,9 @@ int main(int argc, char **argv)
                 goto out;
             }
         }
+
+        if (!ari_check && !acme_bootstrap(&a))
+            goto out;
 
         if (account_retrieve(&a) && cert_issue(&a, names, csr)) {
             if (newkeyfile) {
