@@ -4714,7 +4714,7 @@ bool cert_valid(const char *certfile, char * const *names, const char *ari_url,
     int ari = -1;
     if (days_left > 0)
         ari = ari_check(crt[0], ari_url);
-    if (ari > 0 || (ari < 0 && days_left < validity)) {
+    if (ari > 0 || (ari < 0 && days_left <= validity)) {
         msg(1, "%s is due for renewal", certfile);
         goto out;
     }
@@ -4771,7 +4771,7 @@ out:
     int ari = -1;
     if (days_left > 0)
         ari = ari_check(crt[0], ari_url);
-    if (ari > 0 || (ari < 0 && days_left < validity)) {
+    if (ari > 0 || (ari < 0 && days_left <= validity)) {
         msg(1, "%s is due for renewal", certfile);
         goto out;
     }
@@ -4900,7 +4900,7 @@ out:
     int ari = -1;
     if (days_left > 0)
         ari = ari_check(crt, ari_url);
-    if (ari > 0 || (ari < 0 && days_left < validity)) {
+    if (ari > 0 || (ari < 0 && days_left <= validity)) {
         msg(1, "%s is due for renewal", certfile);
         goto out;
     }
