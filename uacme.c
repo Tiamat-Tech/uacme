@@ -45,6 +45,7 @@
 #include "crypto.h"
 #include "json.h"
 #include "msg.h"
+#include "read-file.h"
 
 #define PRODUCTION_URL "https://acme-v02.api.letsencrypt.org/directory"
 #define STAGING_URL "https://acme-staging-v02.api.letsencrypt.org/directory"
@@ -1534,6 +1535,7 @@ int main(int argc, char **argv)
     };
 
     int ret = 2;
+    size_t sz = 0;
     bool never = false;
     bool force = false;
     bool yes = false;
@@ -1556,6 +1558,7 @@ int main(int argc, char **argv)
     char *keyfile = NULL;
     char *newkeyfile = NULL;
     char *bakkeyfile = NULL;
+    char *eabkey = NULL;
     privkey_t key = NULL;
     acme_t a;
     memset(&a, 0, sizeof(a));
@@ -1625,7 +1628,15 @@ int main(int argc, char **argv)
                 break;
 
             case 'e':
-                if (!eab_parse(&a, optarg))
+                eabkey = read_file(optarg, &sz);
+                if (eabkey) {
+                    msg(1, "EAB credentials loaded from %s", optarg);
+                    if (!eab_parse(&a, eabkey))
+                        goto out;
+                } else if (errno != ENOENT) {
+                    warn("failed to read %s", optarg);
+                    goto out;
+                } else if (!eab_parse(&a, optarg))
                     goto out;
                 break;
 
@@ -2066,6 +2077,7 @@ out:
         unlink(newkeyfile);
     free(newkeyfile);
     free(bakkeyfile);
+    free(eabkey);
     free(csr);
     free(filename);
     for (int i = 0; names && names[i]; i++)

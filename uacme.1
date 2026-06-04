@@ -2,12 +2,12 @@
 .\"     Title: uacme
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 04/05/2026
+.\"      Date: 06/04/2026
 .\"    Manual: User Commands
-.\"    Source: uacme 1.8.1
+.\"    Source: uacme 1.8.1-dev
 .\"  Language: English
 .\"
-.TH "UACME" "1" "04/05/2026" "uacme 1\&.8\&.1" "User Commands"
+.TH "UACME" "1" "06/04/2026" "uacme 1\&.8\&.1\-dev" "User Commands"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 uacme \- ACMEv2 client written in plain C with minimal dependencies
 .SH "SYNOPSIS"
 .sp
-\fBuacme\fR [\fB\-a\fR|\fB\-\-acme\-url\fR \fIURL\fR] [\fB\-b\fR|\fB\-\-bits\fR \fIBITS\fR] [\fB\-c\fR|\fB\-\-confdir\fR \fIDIR\fR] [\fB\-d\fR|\fB\-\-days\fR \fIDAYS\fR] [\fB\-e\fR|\fB\-\-eab\fR KEYID:KEY[:BITS]] [\fB\-f\fR|\fB\-\-force\fR] [\fB\-h\fR|\fB\-\-hook\fR \fIPROGRAM\fR] [\fB\-i\fR|\fB\-\-no\-ari\fR] [\fB\-k\fR|\fB\-\-rotate\-key\fR] [\fB\-l\fR|\fB\-\-alternate\fR \fIN\fR | \fIFP\fR] [\fB\-m\fR|\fB\-\-must\-staple\fR] [\fB\-n\fR|\fB\-\-never\-create\fR] [\fB\-o\fR|\fB\-\-no\-ocsp\fR] [\fB\-p\fR|\fB\-\-profile\fR PROFILE] [\fB\-r\fR|\fB\-\-reason\fR CODE] [\fB\-s\fR|\fB\-\-staging\fR] [\fB\-t\fR|\fB\-\-type\fR \fBRSA\fR|\fBEC\fR] [\fB\-v\fR|\fB\-\-verbose\fR \&...] [\fB\-V\fR|\fB\-\-version\fR] [\fB\-y\fR|\fB\-\-yes\fR] [\fB\-?\fR|\fB\-\-help\fR] \fBnew\fR [\fIEMAIL\fR] | \fBupdate\fR [\fIEMAIL\fR] | \fBdeactivate\fR | \fBnewkey\fR | \fBissue\fR \fIIDENTIFIER\fR [\fIALTNAME\fR \&...]] | \fBissue\fR \fICSRFILE\fR | \fBcheck\fR \fIIDENTIFIER\fR [\fIALTNAME\fR \&...]] | \fBcheck\fR \fICSRFILE\fR | \fBrevoke\fR \fICERTFILE\fR [\fICERTKEYFILE\fR]
+\fBuacme\fR [\fB\-a\fR|\fB\-\-acme\-url\fR \fIURL\fR] [\fB\-b\fR|\fB\-\-bits\fR \fIBITS\fR] [\fB\-c\fR|\fB\-\-confdir\fR \fIDIR\fR] [\fB\-d\fR|\fB\-\-days\fR \fIDAYS\fR] [\fB\-e\fR|\fB\-\-eab\fR \fIKEYID:KEY[:BITS]\fR | \fIEABFILE\fR] [\fB\-f\fR|\fB\-\-force\fR] [\fB\-h\fR|\fB\-\-hook\fR \fIPROGRAM\fR] [\fB\-i\fR|\fB\-\-no\-ari\fR] [\fB\-k\fR|\fB\-\-rotate\-key\fR] [\fB\-l\fR|\fB\-\-alternate\fR \fIN\fR | \fIFP\fR] [\fB\-m\fR|\fB\-\-must\-staple\fR] [\fB\-n\fR|\fB\-\-never\-create\fR] [\fB\-o\fR|\fB\-\-no\-ocsp\fR] [\fB\-p\fR|\fB\-\-profile\fR PROFILE] [\fB\-r\fR|\fB\-\-reason\fR CODE] [\fB\-s\fR|\fB\-\-staging\fR] [\fB\-t\fR|\fB\-\-type\fR \fBRSA\fR|\fBEC\fR] [\fB\-v\fR|\fB\-\-verbose\fR \&...] [\fB\-V\fR|\fB\-\-version\fR] [\fB\-y\fR|\fB\-\-yes\fR] [\fB\-?\fR|\fB\-\-help\fR] \fBnew\fR [\fIEMAIL\fR] | \fBupdate\fR [\fIEMAIL\fR] | \fBdeactivate\fR | \fBnewkey\fR | \fBissue\fR \fIIDENTIFIER\fR [\fIALTNAME\fR \&...]] | \fBissue\fR \fICSRFILE\fR | \fBcheck\fR \fIIDENTIFIER\fR [\fIALTNAME\fR \&...]] | \fBcheck\fR \fICSRFILE\fR | \fBrevoke\fR \fICERTFILE\fR [\fICERTKEYFILE\fR]
 .SH "DESCRIPTION"
 .sp
 \fBuacme\fR is a client for the ACMEv2 protocol described in RFC8555, written in plain C with minimal dependencies (libcurl and one of GnuTLS, OpenSSL or mbedTLS)\&. The ACMEv2 protocol allows a Certificate Authority (https://letsencrypt\&.org is a popular one) and an applicant to automate the process of verification and certificate issuance\&. The protocol also provides facilities for other certificate management functions, such as certificate revocation\&. For more information see https://tools\&.ietf\&.org/html/rfc8555
@@ -101,7 +101,7 @@ and
 \fB\-o, \-\-no\-ocsp\fR\&.
 .RE
 .PP
-\fB\-e, \-\-eab\fR \fIKEYID:KEY[:BITS]\fR
+\fB\-e, \-\-eab\fR \fIKEYID:KEY[:BITS]\fR | \fIEABFILE\fR
 .RS 4
 Specify RFC8555 External Account Binding credentials according to
 https://tools\&.ietf\&.org/html/rfc8555#section\-7\&.3\&.4, in order to associate a new ACME account with an existing account in a non\-ACME system such as a CA customer database\&.
@@ -110,7 +110,9 @@ must be an ASCII string\&.
 \fIKEY\fR
 must be base64url\-encoded\&.
 \fIBITS\fR
-is either 256, 384 or 512 and determines the number of bits of the EAB signature algorithm (default HMAC\-SHA\-256 when omitted)\&.
+is either 256, 384 or 512 and determines the number of bits of the EAB signature algorithm (default HMAC\-SHA\-256 when omitted)\&. Alternatively
+\fIEABFILE\fR
+is the name of a file containing one line with KEYID:KEY[:BITS]\&.
 .RE
 .PP
 \fB\-f, \-\-force\fR
