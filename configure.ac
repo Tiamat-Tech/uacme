@@ -286,7 +286,6 @@ if test "x$OPT_OPENSSL" != "xno"; then
             AC_MSG_RESULT([no]))
     fi
 fi
-AM_CONDITIONAL(ENABLE_READFILE, test "x$USE_OPENSSL" != "xyes")
 
 if test "x$OPT_MBEDTLS" != "xno"; then
     addlib="-lmbedtls -lmbedx509 -lmbedcrypto"

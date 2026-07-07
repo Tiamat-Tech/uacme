@@ -41,17 +41,13 @@ endif
 
 uacme_SOURCES = uacme.c base64.c base64.h crypto.c crypto.h \
 		curlwrap.c curlwrap.h json.c json.h jsmn.h \
-		msg.c msg.h
+		msg.c msg.h read-file.c read-file.h
 uacme_CPPFLAGS = -DRUNSTATEDIR="\"${runstatedir}\"" \
 		 -DSYSCONFDIR="\"${sysconfdir}\"" \
 		 $(CURL_CPPFLAGS)
 uacme_CFLAGS = $(CURL_CFLAGS) $(WCFLAGS)
 uacme_LDFLAGS = $(CURL_LDFLAGS)
 uacme_LDADD = $(CURL_LDADD)
-
-if ENABLE_READFILE
-uacme_SOURCES += read-file.c read-file.h
-endif
 
 BUILT_SOURCES = $(top_srcdir)/.version
 $(top_srcdir)/.version:
